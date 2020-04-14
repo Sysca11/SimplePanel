@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="txt/html; charset=utf-8" />
+        <title>MyServer</title>
+        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script>
+            var tim=0;
+            function send(){
+                var x=document.getElementById('con');
+                //ajax
+                $.post("/ctrl/i",{"inp":x.value});
+                x.value="";
+            }
+            function csend(){
+                if(event.keyCode==13){
+                    send()
+                }
+            }
+            function ctrl(c){
+                $.get("/ctrl/"+c)
+            }
+            function update(){
+                $.get("/log/"+tim,function (d,s){
+                  if(s=="success"){
+                    if(d=="False"){
+                        alert("auth error")
+                        window.location="auth"
+                    }
+                    var x=JSON.parse(d)
+                    tim=x["time"]
+                    var lg=x["log"]
+                    if(lg!="none"){
+                        document.getElementById('log').value=lg
+                        document.getElementById('log').scrollTo(0,100000)
+                    }
+                  }else{
+                      alert("error in ajax");
+                      //window.location="auth"
+                  }
+                })
+            }
+            function launchTask(){
+                setInterval(update,1000)
+            }
+        </script>
+    </head>
+    <body>
+        <script>
+            launchTask()
+        </script>
+        <textarea id="log" style="width:100%;height: 80%;font-size:xx-large;"></textarea>
+        <input id="con" onkeyup="csend()" style="font-size: x-large;width: 80%;height:10%;margin-top: 2%;"></input>
+        <button onclick="send()" style="font-size: x-large;margin-left: 4%;width: 15%;height: 10%;margin-top: 2%;">Send</button>
+        <button onclick="ctrl('start')" style="font-size: x-large;">Start</button>
+        <button onclick="ctrl('stop')" style="font-size: x-large;">Kill</button>
+    </body>
+</html>

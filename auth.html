@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="txt/html; charset=utf-8" />
+        <title>MyServer Auth</title>
+        <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script> 
+        <script>
+            function checkAuth(){
+                var x=md5(document.getElementById("password").value);
+                document.cookie = "p=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                var exp = new Date();
+                exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
+                exp = exp.toGMTString();
+                console.log("p="+x+";expires="+exp+";path=/");
+                document.cookie="p="+x+";expires="+exp+";path=/";
+                window.location="index";
+            }
+        </script>
+    </head>
+    <body>
+        <p>enter password</p><input id="password"></input>
+        <button onclick="checkAuth()">Submit</button>
+    </body>
+</html>
