@@ -10,4 +10,5 @@ specify your server path `["F:\\bedrock-server-1.14.21.0\\bedrock_server.exe"],"
 specify www port `app.run(host="0.0.0.0", port=3390)`<br>
 # Start
 `python3 main.py`<br>
-daemon will restart server when it dies.
+daemon will restart server when it dies.<br>
+open http://your_ip:3390/ in browser
